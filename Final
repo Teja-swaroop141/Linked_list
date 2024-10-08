@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+    int data;
+    struct node *next;
+} Node;
+
+Node *insert(Node **head, int data) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = *head;
+    *head = newNode;
+    return newNode;
+}
+
+int search(Node *head, int data) {
+    while (head != NULL) {
+        if (head->data == data) {
+            return 1;
+        }
+        head = head->next;
+    }
+    return 0;
+}
+
+Node *findUnion(Node *A, Node *B) {
+    Node *C = NULL;
+    Node *temp = A;
+
+    while (temp != NULL) {
+        insert(&C, temp->data);
+        temp = temp->next;
+    }
+
+    while (B != NULL) {
+        if (!search(A, B->data)) {
+            insert(&C, B->data);
+        }
+        B = B->next;
+    }
+
+    return C;
+}
+
+Node *findIntersection(Node *A, Node *B) {
+    Node *D = NULL;
+
+    while (A != NULL) {
+        if (search(B, A->data)) {
+            insert(&D, A->data);
+        }
+        A = A->next;
+    }
+
+    return D;
+}
+
+void printList(Node *head) {
+    while (head != NULL) {
+        printf("--->%d", head->data);
+        head = head->next;
+    }
+}
+
+int main() {
+    int i, Acount, Bcount, temp;
+
+    printf("\n Enter number of nodes in first Linked List: ");
+    scanf("%d", &Acount);
+
+    Node *A = NULL;
+
+    printf("\n Enter data of first linked list: ");
+    for (i = 0; i < Acount; i++) {
+        scanf("%d", &temp);
+        insert(&A, temp);
+    }
+
+    printList(A);
+
+    printf("\n Enter number of nodes in second Linked List: ");
+    scanf("%d", &Bcount);
+
+    Node *B = NULL;
+
+    printf("\n Enter data of second linked list: ");
+    for (i = 0; i < Bcount; i++) {
+        scanf("%d", &temp);
+        insert(&B, temp);
+    }
+
+    printList(B);
+
+    Node *unionList = findUnion(A, B);
+    Node *intersectionList = findIntersection(A, B);
+
+    printf("\nUnion of two Linked Lists:\n");
+    printList(unionList);
+
+    printf("\nIntersection of two Linked Lists:\n");
+    printList(intersectionList);
+
+    return 0;
+}
