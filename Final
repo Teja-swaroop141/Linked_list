@@ -43,6 +43,10 @@ Node *findUnion(Node *A, Node *B) {
     return C;
 }
 
+
+
+
+// comment by charann
 Node *findIntersection(Node *A, Node *B) {
     Node *D = NULL;
 
