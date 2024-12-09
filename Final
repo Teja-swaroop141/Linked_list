@@ -55,7 +55,7 @@ Node *findIntersection(Node *A, Node *B) {
 
     return D;
 }
-
+//print the list
 void printList(Node *head) {
     while (head != NULL) {
         printf("--->%d", head->data);
